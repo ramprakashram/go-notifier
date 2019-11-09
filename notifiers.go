@@ -2,8 +2,11 @@ package notifier
 
 import (
 	"fmt"
+	"log"
 	"os/exec"
 	"runtime"
+
+	gosxnotifier "github.com/deckarep/gosx-notifier"
 )
 
 const (
@@ -21,6 +24,15 @@ func notifyLinux(title string, text string, level string) {
 	cmd.Run()
 }
 
+func notifyDarwin(title string, text string, level string) {
+	note := gosxnotifier.NewNotification(text)
+	note.Title = title
+	err := note.Push()
+	if err != nil {
+		log.Println("Error while pushing notification")
+	}
+}
+
 func Notify(title string, text string, level string) {
 	switch os := runtime.GOOS; os {
 	case LINUX:
@@ -28,7 +40,7 @@ func Notify(title string, text string, level string) {
 	case WINDOWS:
 		notSupported()
 	case OSX:
-		notSupported()
+		notifyDarwin(title, text, level)
 	default:
 		notSupported()
 	}
