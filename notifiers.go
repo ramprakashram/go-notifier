@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"log"
 	"os/exec"
 	"path/filepath"
 	"runtime"
@@ -12,6 +13,7 @@ import (
 	"text/template"
 
 	uuid "github.com/nu7hatch/gouuid"
+	gosxnotifier "github.com/deckarep/gosx-notifier"
 )
 
 type WindowsToaster struct {
@@ -131,6 +133,15 @@ func notifyWindows(title string, text string, level string) {
 	windowToast.Notify()
 }
 
+func notifyDarwin(title string, text string, level string) {
+	note := gosxnotifier.NewNotification(text)
+	note.Title = title
+	err := note.Push()
+	if err != nil {
+		log.Println("Error while pushing notification")
+	}
+}
+
 func Notify(title string, text string, level string) {
 	switch os := runtime.GOOS; os {
 	case LINUX:
@@ -138,7 +149,7 @@ func Notify(title string, text string, level string) {
 	case WINDOWS:
 		notifyWindows(title, text, level)
 	case OSX:
-		notSupported()
+		notifyDarwin(title, text, level)
 	default:
 		notSupported()
 	}
