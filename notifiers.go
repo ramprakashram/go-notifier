@@ -111,11 +111,8 @@ func initiateWindowsNotification(toast string) error {
 func (toastData *WindowsToaster) Notify() error {
 	windowsXML, error := toastData.generateWindowsXML()
 	if error != nil {
-		fmt.Printf("%s", error)
 		return error
 	}
-
-	fmt.Println("inside 1")
 
 	return initiateWindowsNotification(windowsXML)
 }
@@ -130,7 +127,6 @@ func notifyLinux(title string, text string, level string) {
 }
 
 func notifyWindows(title string, text string, level string) {
-	fmt.Println("In Windows")
 	windowToast := parseWindowsToaster(title, text, level)
 	windowToast.Notify()
 }
