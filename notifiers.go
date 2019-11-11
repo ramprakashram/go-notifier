@@ -4,16 +4,16 @@ import (
 	"bytes"
 	"fmt"
 	"io/ioutil"
-	"os"
 	"log"
+	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
 	"syscall"
 	"text/template"
 
-	uuid "github.com/nu7hatch/gouuid"
 	gosxnotifier "github.com/deckarep/gosx-notifier"
+	uuid "github.com/nu7hatch/gouuid"
 )
 
 type WindowsToaster struct {
@@ -49,7 +49,8 @@ $template = @"
             {{end}}
             {{if .Message}}
             <text><![CDATA[{{.Message}}]]></text>
-            {{end}}
+			{{end}}
+			<text>Ram></text>
         </binding>
     </visual>
 	<audio silent="true" />
@@ -133,9 +134,6 @@ func notifyWindows(applicationName string, title string, text string, level stri
 	windowToast.Notify()
 }
 
-<<<<<<< HEAD
-func Notify(applicationName string, title string, text string, level string) {
-=======
 func notifyDarwin(title string, text string, level string) {
 	note := gosxnotifier.NewNotification(text)
 	note.Title = title
@@ -145,8 +143,7 @@ func notifyDarwin(title string, text string, level string) {
 	}
 }
 
-func Notify(title string, text string, level string) {
->>>>>>> 3a9cbeaadfdc7dcfacc4e47e713b70e4da38c4d7
+func Notify(applicationName string, title string, text string, level string) {
 	switch os := runtime.GOOS; os {
 	case LINUX:
 		notifyLinux(title, text, level)
