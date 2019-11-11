@@ -19,6 +19,6 @@ This package can be used to send desktop notifications from any go applications 
 	
 ##### Supported OS:
 1.  Linux
-2. 	Windows
+2.  Windows
 
 we will extend our support soon for other operating system

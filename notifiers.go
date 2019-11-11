@@ -49,9 +49,8 @@ $template = @"
             {{end}}
             {{if .Message}}
             <text><![CDATA[{{.Message}}]]></text>
-			{{end}}
-			<text>Ram></text>
-        </binding>
+      			{{end}}
+         </binding>
     </visual>
 	<audio silent="true" />
 </toast>
