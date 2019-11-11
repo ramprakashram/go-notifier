@@ -74,9 +74,9 @@ func setDuration(level string) string {
 	}
 }
 
-func parseWindowsToaster(title string, text string, level string) WindowsToaster {
+func parseWindowsToaster(applicationName string, title string, text string, level string) WindowsToaster {
 	return WindowsToaster{
-		AppID:    "Windows Notifier",
+		AppID:    applicationName,
 		Title:    title,
 		Message:  text,
 		Duration: setDuration(level),
@@ -126,17 +126,17 @@ func notifyLinux(title string, text string, level string) {
 	cmd.Run()
 }
 
-func notifyWindows(title string, text string, level string) {
-	windowToast := parseWindowsToaster(title, text, level)
+func notifyWindows(applicationName string, title string, text string, level string) {
+	windowToast := parseWindowsToaster(applicationName, title, text, level)
 	windowToast.Notify()
 }
 
-func Notify(title string, text string, level string) {
+func Notify(applicationName string, title string, text string, level string) {
 	switch os := runtime.GOOS; os {
 	case LINUX:
 		notifyLinux(title, text, level)
 	case WINDOWS:
-		notifyWindows(title, text, level)
+		notifyWindows(applicationName, title, text, level)
 	case OSX:
 		notSupported()
 	default:
